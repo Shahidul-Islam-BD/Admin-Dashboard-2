@@ -3,7 +3,8 @@ import React, { useState } from "react";
 
 const UploadTheme = () => {
   const [description, setDescription] = useState("");
-  const [numberOfFelid, setNumberOfFeild] = useState([{}]);
+  const [numberOfFields, setNumberOfFields] = useState([]);
+  const [support, setSupport] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,16 +13,25 @@ const UploadTheme = () => {
     const version = form.version.value;
     const price = form.price.value;
     const thumbnails = form.thumbnails.value;
-    console.log(name, version, price, description);
-    console.log(thumbnails);
+
+    console.log("Name:", name);
+    console.log("Version:", version);
+    console.log("Price:", price);
+    console.log("Thumbnails:", thumbnails);
+    console.log("Description:", description);
+    console.log("Support:", support);
   };
 
   const handleSupportIncrement = (e) => {
     e.preventDefault();
-    const temp = [...numberOfFelid];
-    temp.push({});
-    setNumberOfFeild(temp);
+    setNumberOfFields([...numberOfFields, {}]);
   };
+
+  const handleSupportChange = (e, index) => {
+    const newSupport = { ...support, [index]: e.target.value };
+    setSupport(newSupport);
+  };
+
   return (
     <div>
       <h2 className="text-3xl font-bold mb-5">Upload your Theme</h2>
@@ -84,15 +94,15 @@ const UploadTheme = () => {
             <div className="label">
               <span className="label-text text-lg font-medium">Support</span>
             </div>
-            {numberOfFelid.map(() => (
-              <>
-                <input
-                  type="text"
-                  placeholder="Type project price"
-                  className="input input-bordered w-full max-w-xs my-1"
-                  name={`support${numberOfFelid.length}`}
-                />
-              </>
+            {numberOfFields.map((_, index) => (
+              <input
+                key={index}
+                type="text"
+                placeholder="Type support detail"
+                className="input input-bordered w-full max-w-xs my-1"
+                // name={`support${index}`}
+                onChange={(e) => handleSupportChange(e, index)}
+              />
             ))}
           </label>
 
