@@ -1,6 +1,15 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 
 const UploadTheme = () => {
+  const [numberOfFelid, setNumberOfFeild] = useState([{}]);
+  const handleSupportIncrement = (e) => {
+    e.preventDefault();
+    const temp = [...numberOfFelid];
+    temp.push({});
+    setNumberOfFeild(temp);
+  };
   return (
     <div>
       <h2 className="text-3xl font-bold mb-5">Upload your Theme</h2>
@@ -42,6 +51,30 @@ const UploadTheme = () => {
               className="input input-bordered w-full max-w-xs"
             />
           </label>
+
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-lg font-medium">Support</span>
+            </div>
+            {numberOfFelid.map(() => (
+              <>
+                <input
+                  type="text"
+                  placeholder="Type project price"
+                  className="input input-bordered w-full max-w-xs my-1"
+                  name={`support${numberOfFelid.length}`}
+                />
+              </>
+            ))}
+          </label>
+
+          <button
+            className="btn btn-sm btn-outline"
+            onClick={handleSupportIncrement}
+          >
+            Add new input field
+          </button>
+
           <label className="form-control">
             <div className="label">
               <span className="label-text text-lg font-medium">
@@ -53,9 +86,13 @@ const UploadTheme = () => {
               placeholder="Write short description for your projects"
             ></textarea>
           </label>
+
           <div className="flex justify-between mt-5">
-            <input  className="btn btn-sm btn-outline" type="submit" value="Submit" />
-            <button className="btn btn-sm btn-outline">Add new input field</button>
+            <input
+              className="btn btn-sm btn-outline"
+              type="submit"
+              value="Submit"
+            />
           </div>
         </form>
       </div>
