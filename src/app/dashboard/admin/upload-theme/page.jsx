@@ -1,23 +1,27 @@
-"use client"
-
+"use client";
 import React, { useState } from "react";
 
 const UploadTheme = () => {
-    const [description,setDescription] = useState('');
+  const [description, setDescription] = useState("");
+  const [numberOfFelid, setNumberOfFeild] = useState([{}]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const version = form.version.value;
+    const price = form.price.value;
+    const thumbnails = form.thumbnails.value;
+    console.log(name, version, price, description);
+    console.log(thumbnails);
+  };
 
-    const handleSubmit = (e)=>{
-        e.preventDefault();
-        const form = e.target;
-        const name = form.name.value;
-        const version = form.version.value;
-        const price = form.price.value;
-        const thumbnails = form.thumbnails.value;
-        console.log(name,version,price,description);
-        console.log(thumbnails);
-
-    }
-
+  const handleSupportIncrement = (e) => {
+    e.preventDefault();
+    const temp = [...numberOfFelid];
+    temp.push({});
+    setNumberOfFeild(temp);
+  };
   return (
     <div>
       <h2 className="text-3xl font-bold mb-5">Upload your Theme</h2>
@@ -75,6 +79,30 @@ const UploadTheme = () => {
               name="thumbnails"
             />
           </label>
+
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text text-lg font-medium">Support</span>
+            </div>
+            {numberOfFelid.map(() => (
+              <>
+                <input
+                  type="text"
+                  placeholder="Type project price"
+                  className="input input-bordered w-full max-w-xs my-1"
+                  name={`support${numberOfFelid.length}`}
+                />
+              </>
+            ))}
+          </label>
+
+          <button
+            className="btn btn-sm btn-outline"
+            onClick={handleSupportIncrement}
+          >
+            Add new input field
+          </button>
+
           <label className="form-control">
             <div className="label">
               <span className="label-text text-lg font-medium">
@@ -84,7 +112,7 @@ const UploadTheme = () => {
             <textarea
               className="textarea textarea-bordered h-24"
               placeholder="Write short description for your projects"
-              onChange={(e)=>setDescription(e.target.value)}
+              onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </label>
           <div className="mt-5">
